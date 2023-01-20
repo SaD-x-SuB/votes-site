@@ -204,3 +204,50 @@ def index(request):
 
 def prof(request):
     return render(request,'registration/profile.html')
+def myVotes(request):
+    content = {
+        'data': Votes.objects.all(),
+        'answers': [],
+        'values_ans': [],
+    }
+    i = 0
+
+    for el in content['data']:
+        strOfAns = el.ansvers
+        dicts = []
+        anses = []
+        counts = []
+        s = ''
+        inte = ''
+
+        dicts.append(el.id)
+
+        for ch in range(0, len(strOfAns)):
+            if strOfAns[ch].isdigit():
+                inte += strOfAns[ch]
+            elif strOfAns[ch].isalpha():
+                s += strOfAns[ch]
+            elif strOfAns[ch] == ';':
+                counts.append(inte)
+                inte = ''
+
+                dicts.append(dict.fromkeys(anses, counts))
+                counts = []
+                anses = []
+            elif strOfAns[ch] == ':':
+                anses.append(s)
+                s = ''
+        content['answers'].append(dicts)
+
+    # logger.error(content['answers'])
+
+    con = content['answers']
+
+    for var in con:
+        dicts = []
+        dicts.append(var[0])
+        for el in range(1, len(var)):
+            for key, value in var[el].items():
+                dicts.append(value)
+        content['values_ans'].append(dicts)
+    return render(request, 'register/myVotes.html')
