@@ -206,11 +206,36 @@ def prof(request):
     return render(request,'registration/profile.html')
 def myVotes(request):
     content = {
-        'data': Votes.objects.all(),
+        'none': False,
+        'data':[],
         'answers': [],
         'values_ans': [],
     }
     i = 0
+    username = request.user.username
+
+
+    user = User.objects.get(username=username)
+    usVotes = str(user.profile.createdVotes)
+
+    # logger.error(usVotes)
+    createdVotesIds = []
+    if usVotes != 'none':
+        usVotesId = ''
+        for ch in usVotes:
+
+            if ch != ',':
+                usVotesId += ch
+
+            else:
+
+                createdVotesIds.append(int(usVotesId))
+                usVotesId = ''
+    else:
+        content['none']=True
+
+    for el in createdVotesIds:
+        content['data'].append(Votes.objects.get(pk=el))
 
     for el in content['data']:
         strOfAns = el.ansvers
@@ -250,4 +275,4 @@ def myVotes(request):
             for key, value in var[el].items():
                 dicts.append(value)
         content['values_ans'].append(dicts)
-    return render(request, 'register/myVotes.html')
+    return render(request, 'registration/myVotes.html',content)

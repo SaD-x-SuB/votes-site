@@ -17,6 +17,8 @@ class Votes(models.Model):
     def __str__(self):
         return str(self.id)
 
+
+
     class Meta:
         verbose_name = "Vote"
         verbose_name_plural = "Votes"
@@ -33,6 +35,9 @@ class Profile(models.Model):
     usedVotes = models.CharField('Участие в голосованиях',max_length=5000,blank=True,default = 'none')
 
     def __str__(self):
+        return str(self.user)
+
+    def get_queryset(self):
         return str(self.user)
 
 @receiver(post_save, sender=User)
