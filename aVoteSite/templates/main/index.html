@@ -1,0 +1,85 @@
+{%extends 'layout.html'%}
+{%block title%}Indexxxtentasionblyat{%endblock%}
+
+
+
+{%block content%}
+
+<h1>Votes page</h1>
+
+{%for el in data %}
+<article>
+<h3>{{el.title}}</h3>
+<p>{{el.text}}</p>
+<p>{{el.date}}</p>
+
+
+
+<!--<p>{{el.id}}</p>-->
+    <style>
+.exa {
+    display: inline-block;
+
+}
+</style>
+
+{% if user.is_authenticated %}
+    <div>
+    <div class="exa">
+    {% for ans in answers %}
+        {% for punkt in ans %}
+            {%if el.id == punkt %}
+                {% for punkt in ans %}
+                    {%if el.id != punkt %}
+                        {%for key in punkt%}
+                            <form method="post" name ="{{el.id}}{{key}}">
+                                <input type="hidden" name ="id" value= "{{el.id}}{{key}}">
+                                <input type="hidden" name ="username" value= "{{user.get_username}}">
+                                {% csrf_token %}
+                                <button class ="{{key}}" type="submit" >{{key}}</button>
+                            </form>
+                        {%endfor%}
+                    {%endif%}
+                {%endfor%}
+            {%endif%}
+        {%endfor%}
+    {%endfor%}
+
+
+
+    </div>
+
+    <div class="exa">
+
+{% for ans in values_ans %}
+        {% for punkt in ans %}
+            {%if el.id == punkt %}
+                {% for punkt in ans %}
+                    {%if el.id != punkt %}
+                        {%for key in punkt%}
+                            <p>{{key}}</p>
+                        {%endfor%}
+                    {%endif%}
+                {%endfor%}
+            {%endif%}
+        {%endfor%}
+{%endfor%}
+
+    </div>
+
+
+
+    </div>
+  {% else %}
+    <a href="{% url 'login'%}?next={{request.path}}">Please login</a>
+  {% endif %}
+
+
+
+</article>
+{%endfor%}
+
+
+
+
+{%endblock%}
