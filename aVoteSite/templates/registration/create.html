@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{%block title%}Create{%endblock%}
+{% block content %}
+
+
+<form method="post", name="date",value="{{now_date}}">
+{% csrf_token %}
+{{form.title}}<br>
+    {{form.text}}<br>
+    {{form.ansvers}}<br>
+    <div hidden >{{form.date}}</div>
+
+    <button type="submit">Create new vote!</button>
+</form>
+
+
+{% endblock %}

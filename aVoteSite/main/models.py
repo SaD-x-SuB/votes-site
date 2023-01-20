@@ -8,7 +8,7 @@ class Votes(models.Model):
     title = models.CharField('Название', max_length=250)
     text = models.TextField('Текст')
     ansvers = models.CharField('Варианты ответов', max_length=500)
-    date = models.DateField('Дата')
+    date = models.DateField('Дата',blank=True)
 
 
     # title = models.CharField('Title', max_length = 50)

@@ -3,6 +3,8 @@ from django.http import HttpResponse
 import logging
 from .models import Votes, Profile
 from django.contrib.auth.models import User
+from .forms import VotesFormAdd
+import datetime
 
 logger = logging.getLogger(__name__)
 def index(request):
@@ -276,3 +278,50 @@ def myVotes(request):
                 dicts.append(value)
         content['values_ans'].append(dicts)
     return render(request, 'registration/myVotes.html',content)
+
+
+def create(request):
+    if request.method=="POST":
+
+        ansv = request.POST['ansvers']
+        logger.error(ansv)
+        strOfAns=''
+        strOfAns +="'"
+        for ch in ansv:
+
+            if(ch!=','):
+                strOfAns += ch
+            else:
+                strOfAns += "'"
+                strOfAns += ":'0';'"
+        strOfAns += "'"
+        strOfAns += ":'0';'"
+        strOfAns = strOfAns[0:len(strOfAns)-1]
+        logger.error(strOfAns)
+        # DATE = date.date.today()
+        #  request.POST['date'] = DATE
+        # form['date'] = DATE
+        logger.error(request.POST)
+        # request.POST['ansvers'] = strOfAns
+        # request.POST['date'] = datetime.date.today()
+        toForm={
+            'csrfmiddlewaretoken': request.POST['csrfmiddlewaretoken'],
+            'title':request.POST['title'],
+            'text':request.POST['text'],
+            'ansvers': strOfAns,
+            'date': datetime.date.today()
+        }
+        form = VotesFormAdd(toForm)
+        if(form.is_valid()):
+            form.save()
+
+
+
+
+    form = VotesFormAdd
+    content ={
+        'now_date' : datetime.date.today(),
+        'form':form
+    }
+
+    return render(request, 'registration/create.html', content)

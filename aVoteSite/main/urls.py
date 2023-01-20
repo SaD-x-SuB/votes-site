@@ -6,4 +6,5 @@ urlpatterns = [
     path('accounts/login',views.index,name='Acc'),
     path('accounts/profile',views.prof,name='profile'),
     path('accounts/profile/myVotes', views.myVotes, name='myVotes'),
+    path('accounts/profile/myVotes/create', views.create, name='createVote'),
 ]
