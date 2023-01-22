@@ -9,6 +9,9 @@
 
 {%for el in data %}
 <article>
+
+
+
 <h3>{{el.title}}</h3>
 <p>{{el.text}}</p>
 <p>{{el.date}}</p>
@@ -36,6 +39,7 @@
                                 <input type="hidden" name ="id" value= "{{el.id}}{{key}}">
                                 <input type="hidden" name ="username" value= "{{user.get_username}}">
                                 {% csrf_token %}
+                                <div hidden ><input type="hidden" name ='rep_id', value = "none"></div>
                                 <button class ="{{key}}" type="submit" >{{key}}</button>
                             </form>
                         {%endfor%}
@@ -75,6 +79,12 @@
   {% endif %}
 
 
+<form method="post", name="id", value="{{el.id}}">
+{% csrf_token %}
+       <div hidden ><input type="hidden" name ='id', value = "{{el.id}}", ></div>
+       <div hidden ><input type="hidden" name ='rep_id', value = "{{el.id}}"></div>
+       <a href="{% url 'myReports' %}"><button type="submit">REPORT</button></a>
+     </form>
 
 </article>
 {%endfor%}

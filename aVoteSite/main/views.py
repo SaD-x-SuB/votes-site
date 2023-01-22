@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import logging
-from .models import Votes, Profile
+from .models import Votes, Profile,Reports
 from django.contrib.auth.models import User
-from .forms import VotesFormAdd
+from .forms import VotesFormAdd,ReportFormAdd
 from .forms import default_const
 import datetime
 from django.views.generic import DetailView, ListView
@@ -11,8 +11,53 @@ from django.views.generic import DetailView, ListView
 
 
 logger = logging.getLogger(__name__)
+def report(request):
+    content={
+        'data': Votes.objects.get(pk=request.POST['rep_id']),
+        'form': ''
+    }
+    toForm={
+        'idOfVote': request.POST['rep_id']
+    }
+    content['form'] = ReportFormAdd(toForm)
+
+
+    return render(request,'registration/report.html',content)
+
 def index(request):
     if request.method == "POST":
+
+
+        if request.POST['rep_id'][0:3] == 'add':
+            id_of_vote = request.POST['rep_id'][4:]
+            textOfRep = request.POST['textOfReport']
+            logger.error(request.POST['rep_id'])
+            toForm = {
+                'idOfVote': request.POST['rep_id'][4:],
+                'textOfReport': textOfRep
+            }
+            form = ReportFormAdd(toForm)
+            jst_saved = form.save()
+            jst_saved = str(jst_saved)
+
+
+            user = User.objects.get(username=request.POST['username'])
+            crReports = str(user.profile.createdReports)
+
+            if crReports!= 'none':
+                user.profile.createdReports+=jst_saved + ','
+                user.profile.save()
+            else:
+                user.profile.createdReports =''
+                user.profile.createdReports += jst_saved + ','
+                user.profile.save()
+
+            return HttpResponse('''<p>completed</p> <a href="">Main</a> ''')
+        elif request.POST['rep_id'] != 'none':
+            return HttpResponse(report(request))
+
+
+
         usname = request.POST['username']
         user = User.objects.get(username=usname)
         usVotes = str(user.profile.usedVotes)
@@ -487,6 +532,16 @@ def create(request):
     }
 
     return render(request, 'registration/create.html', content)
+def myReports(request):
+    return HttpResponse("<p>hay</p>")
+
+
+
+
+
+
+
+
 
 class VoteDetailView(DetailView):
     model = Votes

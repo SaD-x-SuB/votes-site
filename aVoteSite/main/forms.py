@@ -1,4 +1,4 @@
-from .models import Votes
+from .models import Votes,Reports
 from django.forms import ModelForm, TextInput, DateTimeInput
 import datetime
 
@@ -49,57 +49,6 @@ class VotesFormAdd(ModelForm,):
 
         }
 
-        # def dfu_02(self, a, b, c,widgets):
-        #     self.def_title = a
-        #     self.def_text = b
-        #     self.def_ansvers = c
-        #     # kol = [self.def_title,self.def_text,self.def_ansvers]
-        #     # return kol
-        #     widgets['title'] = TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Название Голосования',
-        #         'value': a
-        #     })
-        #     widgets['text'] = TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Напишите немного о голосовании',
-        #         'value': b
-        #     }),
-        #     widgets['ansvers']= TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Напишите ответы в формате(используйте только буквы): answer_one,answer_two',
-        #         'value': c
-        #     }),
-
-
-
-    # def puul_form(self, def_title='', def_text='', def_ansvers=''):
-    #     class Meta:
-    #         model = Votes
-    #         fields = ['title', 'text', 'ansvers', 'date']
-    #         widgets = {
-    #             'title': TextInput(attrs={
-    #                 'class': 'form-control',
-    #                 'placeholder': 'Название Голосования',
-    #                 'value': '123'
-    #             }),
-    #             'text': TextInput(attrs={
-    #                 'class': 'form-control',
-    #                 'placeholder': 'Напишите немного о голосовании',
-    #                 'value': def_text
-    #             }),
-    #             'ansvers': TextInput(attrs={
-    #                 'class': 'form-control',
-    #                 'placeholder': 'Напишите ответы в формате(используйте только буквы): answer_one,answer_two',
-    #                 'value': def_ansvers
-    #             }),
-    #             'date': DateTimeInput(attrs={
-    #                 'class': 'form-control',
-    #                 'placeholder': 'Дата'
-    #             }),
-    #
-    #         }
-
         date = default_datetime()
 
 
@@ -127,5 +76,22 @@ def default_const(a,b,c,forma):
     }),
 
     return forma
+
+class ReportFormAdd(ModelForm):
+    class Meta:
+        model = Reports
+        fields=['textOfReport','idOfVote']
+        widgets = {
+            'idOfVote': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Опишите Жалобу',
+                'value': ''
+            }),
+            'textOfReport': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Опишите Жалобу',
+                'value': ''
+            }),
+        }
 
 

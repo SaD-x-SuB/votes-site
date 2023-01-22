@@ -48,3 +48,13 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class Reports(models.Model):
+    idOfVote = models.CharField('ID голосования', max_length=250, blank=True)
+    textOfReport = models.TextField('Текст жалобы')
+    status = models.CharField('Статус жалобы', max_length=250,default = '0: Wait for verification', blank=True)
+    def __str__(self):
+        return  str(self.id)
+    class Meta:
+        verbose_name ="Report"
+        verbose_name_plural = "Reports"

@@ -8,4 +8,6 @@ urlpatterns = [
     path('accounts/profile/myVotes', views.myVotes, name='myVotes'),
     path('accounts/profile/myVotes/create', views.create, name='createVote'),
     path("accounts/profile/myVotes/ref", views.refactor, name = "refact"),
+    path('accounts/profile/myReports', views.myReports, name='myReports'),
+    # path('report', views.makeReport, name='makeReport'),
 ]

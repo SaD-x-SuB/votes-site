@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{%block title%}Refactor{%endblock%}
+{% block content %}
+
+
+
+
+<form method="post", name="date",value="{{now_date}}">
+{% csrf_token %}
+    {{form.textOfReport}}
+     <input type="hidden" name ="username" value= "{{user.get_username}}">
+     <div hidden ><input type="hidden" name ='rep_id', value = "add_{{data.id}}"></div>
+
+    <button type="submit">Report This!</button>
+</form>
+
+
+{% endblock %}
