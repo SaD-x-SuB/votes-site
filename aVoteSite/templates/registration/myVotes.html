@@ -2,11 +2,15 @@
 {%block title%}Login{%endblock%}
 {% block content %}
 <a href ="{% url 'createVote'%}" >add new</a>
+ <br>
+ <br>
+ <br>
 
 {%if none != true %}
 
 {%for el in data %}
 <article>
+    <a href="">Refactor</a>
 <h3>{{el.title}}</h3>
 <p>{{el.text}}</p>
 <p>{{el.date}}</p>
