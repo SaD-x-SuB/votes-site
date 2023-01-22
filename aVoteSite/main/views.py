@@ -203,7 +203,6 @@ def index(request):
 
 
     return render(request, 'main/index.html', content)
-
 def prof(request):
     return render(request,'registration/profile.html')
 def myVotes(request):
@@ -278,8 +277,6 @@ def myVotes(request):
                 dicts.append(value)
         content['values_ans'].append(dicts)
     return render(request, 'registration/myVotes.html',content)
-
-
 def create(request):
     if request.method=="POST":
 
@@ -315,8 +312,22 @@ def create(request):
         if(form.is_valid()):
             form.save()
 
-
-
+            username = request.user.username
+            user = User.objects.get(username=username)
+            usVotes = str(user.profile.createdVotes)
+            if usVotes != 'none':
+                newVoteId = Votes.objects.get(title = toForm['title'])
+                # logger.error(user.profile.createdVotes)
+                usVotes += str(newVoteId)+","
+                user.profile.createdVotes = usVotes
+                user.profile.save()
+            else:
+                usVOtes=''
+                newVoteId = Votes.objects.get(title=toForm['title'])
+                # logger.error(user.profile.createdVotes)
+                usVotes += str(newVoteId) + ","
+                user.profile.createdVotes = usVotes
+                user.profile.save()
 
     form = VotesFormAdd
     content ={
@@ -325,3 +336,4 @@ def create(request):
     }
 
     return render(request, 'registration/create.html', content)
+
