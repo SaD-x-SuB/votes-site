@@ -10,7 +10,14 @@
 
 {%for el in data %}
 <article>
-    <a href="">Refactor</a>
+   <form method="post", name="id", value="{{el.id}}">
+{% csrf_token %}
+       <div hidden ><input type="hidden" name ='id', value = "{{el.id}}", ></div>
+       <div hidden ><input type="hidden" name ='ref_id', value = "none"></div>
+<a href="{% url 'refact' %}"><button type="submit">refactor</button></a>
+</form>
+
+
 <h3>{{el.title}}</h3>
 <p>{{el.text}}</p>
 <p>{{el.date}}</p>

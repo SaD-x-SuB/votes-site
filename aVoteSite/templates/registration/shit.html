@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{%block title%}Refactor{%endblock%}
+{% block content %}
+
+
+
+
+<form method="post", name="date",value="{{now_date}}">
+{% csrf_token %}
+{{form.title}}- {{data.title}}<br>
+    {{form.text}}- {{data.text}}<br>
+    {{form.ansvers}}- {{answers}}<br>
+    <div hidden >{{form.date}}</div>
+    <div hidden ><input type="hidden" name ='id', value = "{{data.id}}"></div>
+    <div hidden ><input type="hidden" name ='ref_id', value = "{{data.id}}"></div>
+    <button type="submit">Refact This!</button>
+</form>
+<form method="post", name="date",value="{{now_date}}">
+{% csrf_token %}
+    <input type="hidden" name ="username" value= "{{user.get_username}}">
+    <div hidden ><input type="hidden" name ='id', value = "{{data.id}}"></div>
+    <div hidden ><input type="hidden" name ='ref_id', value = "delete"></div>
+    <button type="submit">Delete this vote</button>
+</form>
+
+
+
+{% endblock %}
