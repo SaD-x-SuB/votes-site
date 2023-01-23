@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{%block title%}Report{%endblock%}
+{% block content %}
+{%if none != true %}
+
+{%for el in data %}
+  {{el.idOfVote}} <br>
+  {{el.textOfReport}} <br>
+{{el.status}} <br>
+<br>
+<br>
+
+{%endfor%}
+
+{%endif%}
+
+{% endblock %}

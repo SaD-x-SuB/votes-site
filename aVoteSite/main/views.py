@@ -533,7 +533,78 @@ def create(request):
 
     return render(request, 'registration/create.html', content)
 def myReports(request):
-    return HttpResponse("<p>hay</p>")
+
+    username = request.user.username
+    user = User.objects.get(username=username)
+    crReports = str(user.profile.createdReports)
+
+    content = {
+        'none': False,
+        'data': [],
+        'answers': [],
+        'values_ans': [],
+    }
+    i = 0
+
+    createdReportsIds = []
+    if crReports != 'none':
+        crReportsId = ''
+        for ch in crReports:
+
+            if ch != ',':
+                crReportsId += ch
+
+            else:
+                createdReportsIds.append(int(crReportsId))
+                crReportsId = ''
+    else:
+        content['none'] = True
+
+    for el in createdReportsIds:
+        logger.error(str(el))
+        content['data'].append(Reports.objects.get(pk=el))
+
+    # for el in content['data']:
+    #     strOfAns = el.ansvers
+    #     dicts = []
+    #     anses = []
+    #     counts = []
+    #     s = ''
+    #     inte = ''
+    #
+    #     dicts.append(el.id)
+    #
+    #     for ch in range(0, len(strOfAns)):
+    #         if strOfAns[ch].isdigit():
+    #             inte += strOfAns[ch]
+    #         elif strOfAns[ch].isalpha():
+    #             s += strOfAns[ch]
+    #         elif strOfAns[ch] == ';':
+    #             counts.append(inte)
+    #             inte = ''
+    #
+    #             dicts.append(dict.fromkeys(anses, counts))
+    #             counts = []
+    #             anses = []
+    #         elif strOfAns[ch] == ':':
+    #             anses.append(s)
+    #             s = ''
+    #     content['answers'].append(dicts)
+    #
+    # # logger.error(content['answers'])
+
+    # con = content['answers']
+    #
+    # for var in con:
+    #     dicts = []
+    #     dicts.append(var[0])
+    #     for el in range(1, len(var)):
+    #         for key, value in var[el].items():
+    #             dicts.append(value)
+    #     content['values_ans'].append(dicts)
+    return render(request, 'registration/myReports.html', content)
+
+    return
 
 
 
