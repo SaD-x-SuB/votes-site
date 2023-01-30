@@ -1,6 +1,7 @@
 from .models import Votes,Reports
 from django.forms import ModelForm, TextInput, DateTimeInput
 import datetime
+from django.contrib.auth.models import User
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -13,6 +14,10 @@ def_text=''
 def_ansvers=''
 
 
+class UserRegisterForm(ModelForm):
+    class Meta():
+        model = User
+        fields=['username','password']
 
 class VotesFormAdd(ModelForm,):
 

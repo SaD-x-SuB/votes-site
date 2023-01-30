@@ -5,9 +5,10 @@ from .models import Votes, Profile,Reports
 from django.contrib.auth.models import User
 from .forms import VotesFormAdd,ReportFormAdd
 from .forms import default_const
+from .forms import UserRegisterForm
 import datetime
-from django.views.generic import DetailView, ListView
-
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import DetailView, ListView,CreateView
 
 
 logger = logging.getLogger(__name__)
@@ -611,7 +612,27 @@ def myReports(request):
 
 
 
+def register(request):
+    if(request.method =='POST'):
+        usernamee = request.POST['user_name']
+        password = request.POST['password']
+        toForm={
+            'username' : request.POST['user_name'],
+            'password' : request.POST['password']
+        }
 
+        nUser = UserRegisterForm(toForm)
+        # nUser['username'] = usernamee
+        # nUser['password'] = password
+        if(UserRegisterForm(toForm).is_valid()):
+            nUser.save()
+            return HttpResponse('''<p>completed</p> <a href="">Main</a> ''')
+        else:
+            return HttpResponse('''<p>ERROR</p> <a href="">Main</a> ''')
+
+
+
+    return render(request,'registration/reg.html')
 
 
 class VoteDetailView(DetailView):
@@ -619,6 +640,9 @@ class VoteDetailView(DetailView):
     template_name ="registration/detail_view.html"
     context_object_name = 'Vote'
     queryset = Votes.objects.all()
+
+
+
 
 
 

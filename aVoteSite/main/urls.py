@@ -9,5 +9,6 @@ urlpatterns = [
     path('accounts/profile/myVotes/create', views.create, name='createVote'),
     path("accounts/profile/myVotes/ref", views.refactor, name = "refact"),
     path('accounts/profile/myReports', views.myReports, name='myReports'),
+    path("signup/", views.register, name="reg"),
     # path('report', views.makeReport, name='makeReport'),
 ]

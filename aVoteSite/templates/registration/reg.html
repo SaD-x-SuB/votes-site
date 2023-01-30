@@ -1,0 +1,14 @@
+{%extends 'layout.html'%}
+{% block content %}
+<h2>Register</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" value="user name" name = 'user_name'>
+    <input type="text" value="password" name = 'password'>
+    <input type="submit" value="Register">
+</form>
+
+<a href="{% url 'login' %}">Back to login</a>
+<a href="{% url 'main' %}">Back to Home</a>
+{% endblock %}
